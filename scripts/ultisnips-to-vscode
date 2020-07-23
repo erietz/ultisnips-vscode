@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import json
+from pathlib import Path
+
+def ultisnips_to_dict(filename):
+    snippets_dictionary = {}
+    with open(filename, 'r') as f:
+        for line in f:
+            if line.startswith('snippet'):
+                dictionary = {}
+                prefix = line.split()[1].strip()
+                dictionary['prefix'] = prefix
+                snippet_name = line.split("\"")[1].strip()
+                dictionary['description'] = snippet_name
+                body = []
+                line = next(f)
+                while not line.startswith('endsnippet'):
+                    body.append(line.strip().replace('VISUAL', 'TM_SELECTED_TEXT'))
+                    line = next(f)
+                dictionary['body'] = body
+                snippets_dictionary[prefix] = dictionary
+    return snippets_dictionary
+
+def main(ultisnips_path):
+    outdir = Path('./converted_snippets')
+    if not outdir.exists():
+        outdir.mkdir()
+    files = Path(ultisnips_path).glob('*.snippets')
+    for file in files:
+        data = ultisnips_to_dict(file)
+        outfile = outdir / file.with_suffix('.json').name
+        print(f'{str(file):<50} {"----->":<10} {str(outfile):<40}')
+        with open(outfile, 'w') as f:
+            json.dump(data, f, indent=True)
+
+if __name__ == "__main__":
+    main('/Users/ethan/.vim/UltiSnips/')
