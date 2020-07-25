@@ -3,6 +3,18 @@
 import json
 from pathlib import Path
 
+def read_config():
+    config_file = Path().home() / '.vscode/ultisnips-vscode.json'
+    with open(config_file, 'r') as f:
+        data = json.load(f)
+    return data
+
+def replace_variables(string):
+    conversions = {'VISUAL': 'TM_SELECTED_TEXT'}
+    for old,new in conversions.items():
+        string = string.replace(old,new)
+    return string
+
 def ultisnips_to_dict(filename):
     snippets_dictionary = {}
     with open(filename, 'r') as f:
@@ -16,23 +28,25 @@ def ultisnips_to_dict(filename):
                 body = []
                 line = next(f)
                 while not line.startswith('endsnippet'):
-                    body.append(line.strip().replace('VISUAL', 'TM_SELECTED_TEXT'))
+                    body.append(replace_variables(line.strip()))
                     line = next(f)
                 dictionary['body'] = body
                 snippets_dictionary[prefix] = dictionary
     return snippets_dictionary
 
-def main(ultisnips_path):
-    outdir = Path('./converted_snippets')
-    if not outdir.exists():
-        outdir.mkdir()
-    files = Path(ultisnips_path).glob('*.snippets')
+def main():
+    directories = read_config()
+    ultisnips_dir = Path(directories['ultisnips-snippets']).expanduser()
+    vscode_dir = Path(directories['vscode-snippets']).expanduser()
+    files = ultisnips_dir.glob('*.snippets')
     for file in files:
-        data = ultisnips_to_dict(file)
-        outfile = outdir / file.with_suffix('.json').name
+        snippets_dictionary = ultisnips_to_dict(file)
+        outfile = vscode_dir / file.with_suffix('.json').name
+        if outfile.name == 'all.json':
+            outfile = outfile.with_name('all.codesnippets')
         print(f'{str(file):<50} {"----->":<10} {str(outfile):<40}')
         with open(outfile, 'w') as f:
-            json.dump(data, f, indent=True)
+            json.dump(snippets_dictionary, f, indent=True)
 
 if __name__ == "__main__":
-    main('/Users/ethan/.vim/UltiSnips/')
+   main()
