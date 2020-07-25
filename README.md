@@ -8,9 +8,7 @@ for use in vscode.
 
 - Clone this repository
 - `cd ultisnips-vscode`
-- `pip install ultisnips-to-vscode`
-- *Or to install in editable mode: `pip install -e .`*
-
+- `pip install .`
 
 # Usage
 
