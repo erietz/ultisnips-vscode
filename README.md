@@ -1,7 +1,8 @@
 # About
 
-Write all of your snippets in vims Ultisnips format and convert them to
-json format to use in vscode.
+This script allows you to write all of your snippets in vims 
+Ultisnips format, and convert the whole batch to json format 
+for use in vscode.
 
 # Installation
 
