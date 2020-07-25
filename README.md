@@ -1,7 +1,26 @@
+# About
+
+Write all of your snippets in vims Ultisnips format and convert them to
+json format to use in vscode.
+
 # Installation
 
-`pip install -e .`
+- Clone this repository
+- `cd ultisnips-vscode`
+- `pip install ultisnips-to-vscode`
+- *Or to install in editable mode: `pip install -e .`*
+
 
 # Usage
 
-`ultisnips-to-vscode`
+- Create a config file at `~/.vscode/ultisnips-vscode.json`
+- Add the paths to your snippets folders. For example:
+
+``` json
+{
+    "ultisnips-snippets":  "~/.vim/UltiSnips/",
+    "vscode-snippets": "~/Library/Application Support/Code/User/snippets/"
+}
+```
+
+- Run the command `ultisnips-to-vscode` to synchronize your snippets.
