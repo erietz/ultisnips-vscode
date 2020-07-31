@@ -12,7 +12,7 @@
 #
 
 import json
-from jsonmerge import merge
+#from jsonmerge import merge
 from pathlib import Path
 from languages import languages
 
@@ -42,8 +42,9 @@ def ultisnips_to_dict(ultisnips_file):
                 dictionary = {}
                 prefix = line.split()[1].strip()
                 dictionary['prefix'] = prefix
-                snippet_name = line.split("\"")[1].strip()
-                dictionary['description'] = snippet_name
+                if '\"' in line:
+                    snippet_name = line.split("\"")[1].strip()
+                    dictionary['description'] = snippet_name
                 body = []
                 line = next(f)
                 while not line.startswith('endsnippet'):
