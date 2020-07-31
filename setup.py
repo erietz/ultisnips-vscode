@@ -6,7 +6,7 @@ setup(
     description="Converts a directory of ultisnips snippets to json for vscode",
     author="Ethan Rietz",
     keywords="vim ultisnips snippets vscode json",
-    packages=['languages'],
+    #packages=['languages'],
     scripts=['scripts/ultisnips_to_vscode']
 )
 

@@ -22,4 +22,17 @@ for use in vscode.
 }
 ```
 
-- Run the command `ultisnips-to-vscode` to synchronize your snippets.
+- Run the command `ultisnips-to-vscode` to synchronize your snippets. This will
+output something like:
+
+``` 
+------------------------------------------------------------------------------------------------------------------------
+/Users/ethan/.vim/UltiSnips/zsh.snippets           ----->     /Users/ethan/Library/Application Support/Code/User/snippets/shellscript.json
+/Users/ethan/.vim/UltiSnips/texmath.snippets       ----->     /Users/ethan/Library/Application Support/Code/User/snippets/tex.json
+/Users/ethan/.vim/UltiSnips/tex.snippets           ----->     /Users/ethan/Library/Application Support/Code/User/snippets/tex.json
+/Users/ethan/.vim/UltiSnips/python.snippets        ----->     /Users/ethan/Library/Application Support/Code/User/snippets/python.json
+/Users/ethan/.vim/UltiSnips/texmath.snippets       ----->     /Users/ethan/Library/Application Support/Code/User/snippets/markdown.json
+/Users/ethan/.vim/UltiSnips/markdown.snippets      ----->     /Users/ethan/Library/Application Support/Code/User/snippets/markdown.json
+/Users/ethan/.vim/UltiSnips/all.snippets           ----->     /Users/ethan/Library/Application Support/Code/User/snippets/global.code-snippets
+------------------------------------------------------------------------------------------------------------------------
+```
