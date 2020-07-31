@@ -22,7 +22,8 @@ for use in vscode.
 }
 ```
 
-- Run the command `ultisnips-to-vscode` to synchronize your snippets. This will
+- Source your shell, or log out and log back in so the script is in your `$PATH`
+- Run the command `ultisnips_to_vscode` to synchronize your snippets. This will
 output something like:
 
 ``` 
