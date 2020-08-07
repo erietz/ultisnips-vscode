@@ -1,5 +1,9 @@
 # About
 
+I don't normally use VSCode, but when I do I use Ultisnips.
+
+![](./mim.jpeg)
+
 This script allows you to write all of your snippets in vims 
 Ultisnips format, and convert the whole batch to json format 
 for use in vscode.
