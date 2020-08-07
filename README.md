@@ -1,6 +1,6 @@
 # About
 
-I don't normally use VSCode, but when I do I use Ultisnips.
+I don't always use VSCode. But when I do, I use Ultisnips.
 
 ![](./mim.jpeg)
 
