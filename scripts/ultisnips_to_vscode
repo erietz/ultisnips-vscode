@@ -48,7 +48,7 @@ def ultisnips_to_dict(ultisnips_file):
                 body = []
                 line = next(f)
                 while not line.startswith('endsnippet'):
-                    body.append(replace_variables(line.strip()))
+                    body.append(replace_variables(line.strip('\n')))
                     line = next(f)
                 dictionary['body'] = body
                 snippets_dictionary[prefix] = dictionary
