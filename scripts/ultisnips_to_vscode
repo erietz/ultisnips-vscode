@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 
-# The general structure of this script
-#
-# 1. Open the config file to figure out where ultisnips snippets are and where
-#    to place vscode snippets
-# 2. Open a .snippets and check which language it corresponds to.
-#       - If it is not a language, do nothing because is must extend a language
-#       - If it is a known language, open all extended files and parse them.
-# 3. 
-#
-#
+"""
+The general structure of this script
+
+1. Open the config file to figure out where ultisnips snippets are and where
+   to place vscode snippets.
+2. Open a .snippets file and check which language it corresponds to.
+      - If it is not a language, do nothing because is must extend a language
+      - If it is a known language, open all extended files and parse them.
+3. Dump the combined dictionary to json
+"""
 
 import json
-#from jsonmerge import merge
 from pathlib import Path
-from languages import languages
+from languages import vim2vscode
 
 def read_config():
     "Reads the configuration file and returns the in and out directories"
@@ -31,10 +30,11 @@ def replace_variables(string):
 
     conversions = {'VISUAL': 'TM_SELECTED_TEXT'}
     for old, new in conversions.items():
-        string = string.replace(old,new)
+        string = string.replace(old, new)
     return string
 
 def ultisnips_to_dict(ultisnips_file):
+    "Parse snippet file and return dictionary reminiscent of json format"
     snippets_dictionary = {}
     with open(ultisnips_file, 'r') as f:
         for line in f:
@@ -55,20 +55,27 @@ def ultisnips_to_dict(ultisnips_file):
     return snippets_dictionary
 
 def detect_filetype(ultisnips_file):
+    """
+    Matches prefix of ultisnips filename with corresponding vscode
+    language from the language dictionary.
+    Returns: a dictionary containing an infile name and outfile name
+    """
     key = ultisnips_file.stem
     #filename = stem + '.code-snippets'
     if key == 'all':
         return {
             'infile': ultisnips_file.name,
             'outfile': 'global.code-snippets'
-                }
-    elif key in languages:
-        outfile = languages[key] + '.json'
-        return {'infile': ultisnips_file.name,
-                'outfile': outfile
-                }
+        }
+    elif key in vim2vscode:
+        outfile = vim2vscode[key] + '.json'
+        return {
+            'infile': ultisnips_file.name,
+            'outfile': outfile
+        }
 
 def extend(ultisnips_file):
+    "Returns list of all ultisnips filenames to extend"
     base = ultisnips_file.parent
     with open(ultisnips_file) as f:
         scopes = [None]
@@ -79,6 +86,7 @@ def extend(ultisnips_file):
     return scopes
 
 def make_big_dict(ultisnips_files):
+    "Create one dictionary from list of all snippets files"
     big_dict = {}
     for file in ultisnips_files:
         big_dict.update(ultisnips_to_dict(file))
@@ -88,19 +96,15 @@ def main():
     directories = read_config()
     ultisnips_dir = Path(directories['ultisnips-snippets']).expanduser()
     vscode_dir = Path(directories['vscode-snippets']).expanduser()
-    files = ultisnips_dir.glob('*.snippets')
-    files = [detect_filetype(f) for f in files]
-    files = [f for f in files if f]
-    #files = [f for f in files if f[0] is not None]
-    #files = [f for f in files if f.stem in languages]
-    for file in files:
-        file['infile'] = ultisnips_dir / file['infile']
-        file['outfile'] = vscode_dir / file['outfile']
-
-    #files = [ultisnips_dir / f for f in files]
+    filenames = ultisnips_dir.glob('*.snippets')
+    filenames = [detect_filetype(f) for f in filenames] # gets dict of input filenames and output filenames
+    filenames = [f for f in filenames if f] # previous line returns "None" if not a real language
+    for file in filenames:
+        file['infile'] = ultisnips_dir / file['infile'] # full paths
+        file['outfile'] = vscode_dir / file['outfile'] # full paths
 
     print('-'*120)
-    for file in files:
+    for file in filenames:
         scopes = extend(file['infile'])
         scopes = [ultisnips_dir / s  for s in scopes if s]
         scopes = scopes + [file['infile']]
