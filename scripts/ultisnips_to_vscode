@@ -7,22 +7,50 @@
 # 2. Open a .snippets and check which language it corresponds to.
 #       - If it is not a language, do nothing because is must extend a language
 #       - If it is a known language, open all extended files and parse them.
-# 3. 
+# 3.
 #
 #
 
 import json
-#from jsonmerge import merge
 from pathlib import Path
 from languages import languages
 
-def read_config():
-    "Reads the configuration file and returns the in and out directories"
 
+def main():
+    directories = read_config()
+    ultisnips_dir = Path(directories['ultisnips-snippets']).expanduser()
+    vscode_dir = Path(directories['vscode-snippets']).expanduser()
+    files = ultisnips_dir.glob('*.snippets')
+    files = [detect_filetype(f) for f in files]
+    files = [f for f in files if f]
+
+    for file in files:
+        file['infile'] = ultisnips_dir / file['infile']
+        file['outfile'] = vscode_dir / file['outfile']
+
+    print('-'*120)
+    for file in files:
+        scopes = extend(file['infile'])
+        scopes = [ultisnips_dir / s for s in scopes if s]
+        scopes = scopes + [file['infile']]
+        snippets_dictionary = make_big_dict(scopes)
+        #snippets_dictionary = ultisnips_to_dict(file)
+        for s in scopes:
+            print(f'{str(s):<50} {"----->":<10} {str(file["outfile"]):<40}')
+        with open(file['outfile'], 'w') as f:
+            json.dump(snippets_dictionary, f, indent=4)
+    print('-'*120)
+
+
+def read_config():
+    """Reads the config file and returns a dictionary containing
+    the ultisnips and vscode snippets directories
+    """
     config_file = Path().home() / '.vscode/ultisnips-vscode.json'
     with open(config_file, 'r') as f:
         data = json.load(f)
     return data
+
 
 def replace_variables(string):
     """Replaces all of the ultisnips variables with the corresponding vscode
@@ -31,8 +59,9 @@ def replace_variables(string):
 
     conversions = {'VISUAL': 'TM_SELECTED_TEXT'}
     for old, new in conversions.items():
-        string = string.replace(old,new)
+        string = string.replace(old, new)
     return string
+
 
 def ultisnips_to_dict(ultisnips_file):
     snippets_dictionary = {}
@@ -54,6 +83,7 @@ def ultisnips_to_dict(ultisnips_file):
                 snippets_dictionary[prefix] = dictionary
     return snippets_dictionary
 
+
 def detect_filetype(ultisnips_file):
     key = ultisnips_file.stem
     #filename = stem + '.code-snippets'
@@ -61,12 +91,13 @@ def detect_filetype(ultisnips_file):
         return {
             'infile': ultisnips_file.name,
             'outfile': 'global.code-snippets'
-                }
+        }
     elif key in languages:
         outfile = languages[key] + '.json'
         return {'infile': ultisnips_file.name,
                 'outfile': outfile
                 }
+
 
 def extend(ultisnips_file):
     base = ultisnips_file.parent
@@ -78,39 +109,14 @@ def extend(ultisnips_file):
                 scopes = [base / f'{s}.snippets' for s in scopes]
     return scopes
 
+
 def make_big_dict(ultisnips_files):
     big_dict = {}
     for file in ultisnips_files:
         big_dict.update(ultisnips_to_dict(file))
     return big_dict
 
-def main():
-    directories = read_config()
-    ultisnips_dir = Path(directories['ultisnips-snippets']).expanduser()
-    vscode_dir = Path(directories['vscode-snippets']).expanduser()
-    files = ultisnips_dir.glob('*.snippets')
-    files = [detect_filetype(f) for f in files]
-    files = [f for f in files if f]
-    #files = [f for f in files if f[0] is not None]
-    #files = [f for f in files if f.stem in languages]
-    for file in files:
-        file['infile'] = ultisnips_dir / file['infile']
-        file['outfile'] = vscode_dir / file['outfile']
-
-    #files = [ultisnips_dir / f for f in files]
-
-    print('-'*120)
-    for file in files:
-        scopes = extend(file['infile'])
-        scopes = [ultisnips_dir / s  for s in scopes if s]
-        scopes = scopes + [file['infile']]
-        snippets_dictionary =  make_big_dict(scopes)
-        #snippets_dictionary = ultisnips_to_dict(file)
-        for s in scopes:
-            print(f'{str(s):<50} {"----->":<10} {str(file["outfile"]):<40}')
-        with open(file['outfile'], 'w') as f:
-            json.dump(snippets_dictionary, f, indent=4)
-    print('-'*120)
 
 if __name__ == "__main__":
-   main()
+    main()
+
