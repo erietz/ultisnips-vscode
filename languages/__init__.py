@@ -1,1 +1,1 @@
-from .vscode_filetypes import languages
+from .vscode_filetypes import vim2vscode

@@ -17,12 +17,23 @@ for use in vscode.
 # Usage
 
 - Create a config file at `~/.vscode/ultisnips-vscode.json`
-- Add the paths to your snippets folders. For example:
+- Add the paths to your snippets folders. 
+- On a mac this file might contain:
 
 ``` json
 {
     "ultisnips-snippets":  "~/.vim/UltiSnips/",
     "vscode-snippets": "~/Library/Application Support/Code/User/snippets/"
+}
+```
+
+- On linux this file might contain:
+
+
+``` json
+{
+    "ultisnips-snippets":  "~/.config/nvim/UltiSnips",
+    "vscode-snippets": "~/.config/Code/User/snippets/"
 }
 ```
 

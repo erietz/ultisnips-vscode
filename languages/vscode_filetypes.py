@@ -3,7 +3,7 @@
 # Keys: ultisnips language prefix
 # Values: vscode language mode
 
-languages = {
+vim2vscode = {
     #'objc': 'objective-c',
     #'ps1': 'powershell',
     #'txt': 'plaintext',
@@ -45,22 +45,11 @@ languages = {
     'javascript': 'javascript',
     'javascript-react': 'javascriptreact',
     'json': 'json',
-<<<<<<< HEAD:languages/vscode_filetypes.py
-    #'us-language': 'jsonc',
-    #'latex': 'latex',
-    #'us-language': 'less',
-    'lua': 'lua',
-    'makefile': 'makefile',
-    'markdown': 'markdown',
-    'objc': 'objective-c',
-    #'us-language': 'objective-cpp',
-=======
     'ksh': 'shellscript',
     'latex': 'latex',
     'lua': 'lua',
     'makefile': 'makefile',
     'markdown': 'markdown',
->>>>>>> 5e7e6024b996d20c2d033c5d3e998fa1ba660d93:languages/vim2vscode.py
     'perl': 'perl',
     'php': 'php',
     'python': 'python',
@@ -72,13 +61,8 @@ languages = {
     'tex': 'latex',
     'typescript': 'typescript',
     'typescript-react': 'typescriptreact',
-<<<<<<< HEAD:languages/vscode_filetypes.py
-    'tex': 'latex',
-    #'us-language': 'vb',
-=======
     'us-language': 'razor',
->>>>>>> 5e7e6024b996d20c2d033c5d3e998fa1ba660d93:languages/vim2vscode.py
     'xml': 'xml',
-    'yaml': 'yaml'
-    'zsh': 'shellscript',
+    'yaml': 'yaml',
+    'zsh': 'shellscript'
 }

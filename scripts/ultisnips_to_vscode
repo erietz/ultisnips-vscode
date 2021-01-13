@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
 
-<<<<<<< HEAD
-# The general structure of this script
-#
-# 1. Open the config file to figure out where ultisnips snippets are and where
-#    to place vscode snippets
-# 2. Open a .snippets and check which language it corresponds to.
-#       - If it is not a language, do nothing because is must extend a language
-#       - If it is a known language, open all extended files and parse them.
-# 3.
-#
-#
-=======
 """
 The general structure of this script
 
@@ -22,38 +10,10 @@ The general structure of this script
       - If it is a known language, open all extended files and parse them.
 3. Dump the combined dictionary to json
 """
->>>>>>> 5e7e6024b996d20c2d033c5d3e998fa1ba660d93
 
 import json
 from pathlib import Path
 from languages import vim2vscode
-
-
-def main():
-    directories = read_config()
-    ultisnips_dir = Path(directories['ultisnips-snippets']).expanduser()
-    vscode_dir = Path(directories['vscode-snippets']).expanduser()
-    files = ultisnips_dir.glob('*.snippets')
-    files = [detect_filetype(f) for f in files]
-    files = [f for f in files if f]
-
-    for file in files:
-        file['infile'] = ultisnips_dir / file['infile']
-        file['outfile'] = vscode_dir / file['outfile']
-
-    print('-'*120)
-    for file in files:
-        scopes = extend(file['infile'])
-        scopes = [ultisnips_dir / s for s in scopes if s]
-        scopes = scopes + [file['infile']]
-        snippets_dictionary = make_big_dict(scopes)
-        #snippets_dictionary = ultisnips_to_dict(file)
-        for s in scopes:
-            print(f'{str(s):<50} {"----->":<10} {str(file["outfile"]):<40}')
-        with open(file['outfile'], 'w') as f:
-            json.dump(snippets_dictionary, f, indent=4)
-    print('-'*120)
-
 
 def read_config():
     """Reads the config file and returns a dictionary containing
@@ -111,20 +71,12 @@ def detect_filetype(ultisnips_file):
             'infile': ultisnips_file.name,
             'outfile': 'global.code-snippets'
         }
-<<<<<<< HEAD
-    elif key in languages:
-        outfile = languages[key] + '.json'
-        return {'infile': ultisnips_file.name,
-                'outfile': outfile
-                }
-=======
     elif key in vim2vscode:
         outfile = vim2vscode[key] + '.json'
         return {
             'infile': ultisnips_file.name,
             'outfile': outfile
         }
->>>>>>> 5e7e6024b996d20c2d033c5d3e998fa1ba660d93
 
 
 def extend(ultisnips_file):
@@ -146,12 +98,6 @@ def make_big_dict(ultisnips_files):
         big_dict.update(ultisnips_to_dict(file))
     return big_dict
 
-<<<<<<< HEAD
-
-if __name__ == "__main__":
-    main()
-
-=======
 def main():
     directories = read_config()
     ultisnips_dir = Path(directories['ultisnips-snippets']).expanduser()
@@ -178,4 +124,3 @@ def main():
 
 if __name__ == "__main__":
    main()
->>>>>>> 5e7e6024b996d20c2d033c5d3e998fa1ba660d93
