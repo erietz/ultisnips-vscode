@@ -2,7 +2,7 @@
 
 I don't always use VSCode. But when I do, I use Ultisnips.
 
-![](./mim.jpeg)
+![](./media/mim.jpeg)
 
 This script allows you to write all of your snippets in vims 
 Ultisnips format, and convert the whole batch to json format 
@@ -10,9 +10,12 @@ for use in vscode.
 
 # Installation
 
-- Clone this repository
-- `cd ultisnips-vscode`
-- `pip install .`
+- Install directly from github
+    - `pip install git+https://github.com/erietz/ultisnips-vscode.git@master#egg=ultisnips-vscode`
+- Clone first then install
+    - Clone this repository
+    - `cd ultisnips-vscode`
+    - `pip install .`
 
 # Usage
 

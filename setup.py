@@ -16,6 +16,6 @@ setup(
     url='https://github.com/erietz/ultisnips-vscode',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
-    scripts=['scripts/ultisnips2vscode'],
+    #scripts=['scripts/ultisnips2vscode'],
     keywords="vim ultisnips snippets vscode json",
 )
