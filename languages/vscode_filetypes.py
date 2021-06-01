@@ -62,6 +62,7 @@ vim2vscode = {
     'typescript': 'typescript',
     'typescript-react': 'typescriptreact',
     'us-language': 'razor',
+    'vue': 'vue',
     'xml': 'xml',
     'yaml': 'yaml',
     'zsh': 'shellscript'
