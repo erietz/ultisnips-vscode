@@ -65,5 +65,6 @@ vim2vscode = {
     'vue': 'vue',
     'xml': 'xml',
     'yaml': 'yaml',
-    'zsh': 'shellscript'
+    'zsh': 'shellscript',
+    'asm': 'asm-intel-x86-generic'
 }
