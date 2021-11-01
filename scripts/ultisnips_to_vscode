@@ -87,7 +87,7 @@ def extend(ultisnips_file):
         for line in f:
             if line.startswith('extends'):
                 scopes = line.split()[1].strip().split(',')
-                scopes = [base / f'{s}.snippets' for s in scopes]
+                scopes = [base / f'{s}.snippets' for s in scopes if s]
     return scopes
 
 
