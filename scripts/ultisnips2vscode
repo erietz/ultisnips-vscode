@@ -13,7 +13,7 @@ The general structure of this script
 
 import json
 from pathlib import Path
-from languages import vim2vscode
+from src import vim2vscode
 
 def read_config():
     """Reads the config file and returns a dictionary containing
