@@ -37,7 +37,14 @@ class UltisnipParser:
             self.language_map = deepcopy(language_map)
 
     def _detect_scopes(self, ultisnip_file: Path) -> list:
-        pass
+        base = ultisnip_file.parent
+        with open(ultisnip_file) as f:
+            scopes = []
+            for line in f:
+                if line.startswith('extends'):
+                    scopes = line.split()[1].strip().split(',')
+                    scopes = [base / f'{s}.snippets' for s in scopes if s]
+        return scopes
 
 
     def _replace_variables(self, string):
@@ -49,7 +56,7 @@ class UltisnipParser:
         for old, new in conversions.items():
             string = string.replace(old, new)
         return string
-    
+
     def _parse_snippet(self, ultisnip_file: Path) -> list:
         """
         Parses out the snippets into JSON form and return a list of dicts
@@ -89,11 +96,11 @@ class UltisnipParser:
         }
 
         for file in self.ultisnip_dir.glob("*.snippets"):
-            vscode_file = self.language_map.get(file.name)
-            if vscode_file is None:
+            vscode_file_type = self.language_map.get(file.stem)
+            if vscode_file_type is None:
                 continue
             else:
-                snippet_data["vscode_file"] = vscode_file
+                snippet_data["vscode_file"] = self.vscode_dir.joinpath(vscode_file_type + ".json")
 
             scopes = self._detect_scopes(file)
             snippet_data["scopes"] = scopes

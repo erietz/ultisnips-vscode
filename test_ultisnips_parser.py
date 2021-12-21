@@ -60,3 +60,22 @@ class TestParseSnippet(unittest.TestCase):
                 ]
             }
         )
+
+class TestParseSnippetsDirectory(unittest.TestCase):
+    def test_parse_snippets(self):
+        parser = UltisnipParser(
+            Path("./test/ultisnips_snippets"),
+            Path("./test/vscode_snippets/")
+        )
+        parser.parse_snippets()
+
+        self.assertIsInstance(parser._snippets_data, dict)
+        python_snippet_data = parser._snippets_data.get("python.snippets")
+        self.assertIsInstance(python_snippet_data, dict)
+        self.assertIsInstance(python_snippet_data.get("snippets"), list)
+
+        self.assertEqual(
+            python_snippet_data.get("vscode_file"),
+            Path("./test/vscode_snippets/python.json")
+            )
+
