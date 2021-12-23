@@ -1,0 +1,14 @@
+extends texmath
+
+snippet up "Use Package"
+\usepackage{${1:package}}$0
+endsnippet
+
+snippet nc "New Command"
+	\\newcommand{\\${1:cmd}}[${2:opt}]{${3:realcmd}} ${0}
+endsnippet
+
+snippet it "Italics"
+\textit{${1:${VISUAL:italics}}} $0
+endsnippet
+

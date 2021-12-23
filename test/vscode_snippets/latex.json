@@ -1,0 +1,48 @@
+[
+  {
+    "|>": {
+      "prefix": "|>",
+      "description": "Ket",
+      "body": [
+        "\\left| $1 \\right> $0"
+      ]
+    },
+    "<|": {
+      "prefix": "<|",
+      "description": "Bra",
+      "body": [
+        "\\left< $1 \\right| $0"
+      ]
+    },
+    "frac": {
+      "prefix": "frac",
+      "description": "Fraction",
+      "body": [
+        "\\frac{${1:${TM_SELECTED_TEXT:numerator}}}{${2:denominator}}${0}"
+      ]
+    }
+  },
+  {
+    "up": {
+      "prefix": "up",
+      "description": "Use Package",
+      "body": [
+        "\\usepackage{${1:package}}$0"
+      ]
+    },
+    "nc": {
+      "prefix": "nc",
+      "description": "New Command",
+      "body": [
+        "\t\\\\newcommand{\\\\${1:cmd}}[${2:opt}]{${3:realcmd}} ${0}"
+      ]
+    },
+    "it": {
+      "prefix": "it",
+      "description": "Italics",
+      "body": [
+        "\\textit{${1:${TM_SELECTED_TEXT:italics}}} $0"
+      ]
+    }
+  }
+]

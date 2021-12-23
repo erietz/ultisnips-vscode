@@ -1,0 +1,37 @@
+[
+  {
+    "main": {
+      "prefix": "main",
+      "description": "main block",
+      "body": [
+        "if __name__ == '__main__':",
+        "    pass"
+      ]
+    },
+    "modules-math": {
+      "prefix": "modules-math",
+      "description": "import math modules",
+      "body": [
+        "import numpy as np",
+        "import matplotlib.pyplot as plt",
+        "import pandas as pd"
+      ]
+    },
+    "shebang": {
+      "prefix": "shebang",
+      "description": "shebang",
+      "body": [
+        "#!/usr/bin/env python3",
+        "$0"
+      ]
+    },
+    "delim": {
+      "prefix": "delim",
+      "body": [
+        "# In[$1]:",
+        "",
+        "$0"
+      ]
+    }
+  }
+]

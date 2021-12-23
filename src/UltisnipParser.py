@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from src import vim2vscode
 from copy import deepcopy
+import json
 # from typing import Union
 
 """
@@ -57,10 +58,9 @@ class UltisnipParser:
             string = string.replace(old, new)
         return string
 
-    def _parse_snippet(self, ultisnip_file: Path) -> list:
+    def _parse_snippet(self, ultisnip_file: Path) -> dict:
         """
-        Parses out the snippets into JSON form and return a list of dicts
-        with the following schema
+        Parses out the snippets into JSON form with the following schema
 
         {
             "prefix" : {
@@ -75,27 +75,27 @@ class UltisnipParser:
         with open(ultisnip_file, 'r') as f:
             for line in f:
                 if line.startswith('snippet'):
-                    dictionary = {}
+                    snippet = {}
                     prefix = line.split()[1].strip()
-                    dictionary['prefix'] = prefix
+                    snippet['prefix'] = prefix
                     if '\"' in line:
                         snippet_name = line.split("\"")[1].strip()
-                        dictionary['description'] = snippet_name
+                        snippet['description'] = snippet_name
                     body = []
                     line = next(f)
                     while not line.startswith('endsnippet'):
                         body.append(self._replace_variables(line.strip('\n')))
                         line = next(f)
-                    dictionary['body'] = body
-                    snippets_dictionary[prefix] = dictionary
+                    snippet['body'] = body
+                    snippets_dictionary[prefix] = snippet
         return snippets_dictionary
 
     def parse_snippets(self) -> None:
-        snippet_data = {
-            "snippets": [],
-        }
 
         for file in self.ultisnip_dir.glob("*.snippets"):
+            snippet_data = {
+                "snippets": [],
+            }
             vscode_file_type = self.language_map.get(file.stem)
             if vscode_file_type is None:
                 continue
@@ -109,11 +109,13 @@ class UltisnipParser:
                 snippets = self._parse_snippet(scope)
                 snippet_data["snippets"].append(snippets)
 
-        self._snippets_data[file.name] = snippet_data
+            self._snippets_data[file.name] = snippet_data
 
 
     def write_snippets(self) -> None:
-        pass
+        for ultisnip_file, snippet_data in self._snippets_data.items():
+            with open(snippet_data.get("vscode_file"), "w") as f:
+                json.dump(snippet_data.get("snippets"), f, indent=2)
 
     def get_snippet_data(self, ultisnip_file: Path = None) -> dict:
         if ultisnip_file == None:

@@ -1,0 +1,41 @@
+[
+  {
+    "|>": {
+      "prefix": "|>",
+      "description": "Ket",
+      "body": [
+        "\\left| $1 \\right> $0"
+      ]
+    },
+    "<|": {
+      "prefix": "<|",
+      "description": "Bra",
+      "body": [
+        "\\left< $1 \\right| $0"
+      ]
+    },
+    "frac": {
+      "prefix": "frac",
+      "description": "Fraction",
+      "body": [
+        "\\frac{${1:${TM_SELECTED_TEXT:numerator}}}{${2:denominator}}${0}"
+      ]
+    }
+  },
+  {
+    "link": {
+      "prefix": "link",
+      "description": "Link to something",
+      "body": [
+        "[${1:${TM_SELECTED_TEXT:Text}}](${3:http://${2:www.url.com}})$0"
+      ]
+    },
+    "img": {
+      "prefix": "img",
+      "description": "Image",
+      "body": [
+        "![${1:pic alt}](${2:path}${3/.+/ \"/}${3:opt title}${3/.+/\"/})$0"
+      ]
+    }
+  }
+]

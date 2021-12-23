@@ -1,6 +1,7 @@
 import unittest
 from pathlib import Path
 from src import UltisnipParser
+import json
 
 class TestParseSnippet(unittest.TestCase):
     def test_parsing_a_single_file(self):
@@ -70,6 +71,7 @@ class TestParseSnippetsDirectory(unittest.TestCase):
         parser.parse_snippets()
 
         self.assertIsInstance(parser._snippets_data, dict)
+        print(parser._snippets_data)
         python_snippet_data = parser._snippets_data.get("python.snippets")
         self.assertIsInstance(python_snippet_data, dict)
         self.assertIsInstance(python_snippet_data.get("snippets"), list)
@@ -79,3 +81,12 @@ class TestParseSnippetsDirectory(unittest.TestCase):
             Path("./test/vscode_snippets/python.json")
             )
 
+class TestWriteSnippets(unittest.TestCase):
+    def test_write_all_snippets(self):
+        ultisnip_dir = Path("./test/ultisnips_snippets")
+        vscode_dir = Path("./test/vscode_snippets")
+        parser = UltisnipParser(ultisnip_dir, vscode_dir)
+        parser.parse_snippets()
+        parser.write_snippets()
+
+        self.assertTrue(Path.exists(vscode_dir / "python.json"))
