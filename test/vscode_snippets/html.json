@@ -1,0 +1,22 @@
+[
+  {
+    "table": {
+      "prefix": "table",
+      "description": "a table",
+      "body": [
+        "<table>",
+        "\t<thead>",
+        "\t\t<tr>",
+        "\t\t\t<td> $1 </td>",
+        "\t\t</tr>",
+        "\t</thead>",
+        "<tbody>",
+        "\t<tr>",
+        "\t\t<td> $0 </td>",
+        "\t</tr>",
+        "</tbody>",
+        "</table>"
+      ]
+    }
+  }
+]

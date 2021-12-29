@@ -43,8 +43,10 @@ class UltisnipParser:
             scopes = []
             for line in f:
                 if line.startswith('extends'):
-                    scopes = line.split()[1].strip().split(',')
-                    scopes = [base / f'{s}.snippets' for s in scopes if s]
+                    scopes = []
+                    for word in line.split(maxsplit=1)[1].split(","):
+                        word = word.strip()
+                        scopes.append(base / f'{word}.snippets')
         return scopes
 
 
@@ -97,7 +99,9 @@ class UltisnipParser:
                 "snippets": [],
             }
             vscode_file_type = self.language_map.get(file.stem)
-            if vscode_file_type is None:
+            if file.stem == "all":
+                snippet_data["vscode_file"] = self.vscode_dir / "global.code-snippets"
+            elif vscode_file_type is None:
                 continue
             else:
                 snippet_data["vscode_file"] = self.vscode_dir.joinpath(vscode_file_type + ".json")
@@ -113,6 +117,9 @@ class UltisnipParser:
 
 
     def write_snippets(self) -> None:
+        if not self.vscode_dir.exists():
+            self.vscode_dir.mkdir()
+
         for ultisnip_file, snippet_data in self._snippets_data.items():
             with open(snippet_data.get("vscode_file"), "w") as f:
                 json.dump(snippet_data.get("snippets"), f, indent=2)
