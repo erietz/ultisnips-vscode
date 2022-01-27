@@ -1,0 +1,11 @@
+{
+  "about": {
+    "prefix": "about",
+    "description": "description of current file",
+    "body": [
+      "Author: Ethan Rietz",
+      "Date: $1",
+      "Description: $0"
+    ]
+  }
+}
