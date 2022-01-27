@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 from shutil import rmtree
-from src import UltisnipParser
+from ultisnips2vscode import UltisnipParser
 import json
 
 class TestParseSnippet(unittest.TestCase):
@@ -74,7 +74,7 @@ class TestParseSnippetsDirectory(unittest.TestCase):
         self.assertIsInstance(parser._snippets_data, dict)
         python_snippet_data = parser._snippets_data.get("python.snippets")
         self.assertIsInstance(python_snippet_data, dict)
-        self.assertIsInstance(python_snippet_data.get("snippets"), list)
+        self.assertIsInstance(python_snippet_data.get("snippets"), dict)
 
         self.assertEqual(
             python_snippet_data.get("vscode_file"),

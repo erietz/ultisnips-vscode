@@ -1,23 +1,22 @@
 import json
 from pathlib import Path
-from src import vim2vscode
+from ultisnips2vscode import vim2vscode
 from copy import deepcopy
 import json
-# from typing import Union
 
 """
 self._snippets_data = {
         "ultisnip_file": {
             "scopes" = ["sh.snippets", "bash.snippets", "zsh.snippets"],
             "vscode_file" = Path("/path/to/file.json"),
-            "snippets" = [
-                {
+            "snippets" = {
+                prefix : {
                     "prefix": "",
                     "description": "",
                     "body": "",
                 },
                 ...
-            ]
+            }
         }
     }
 """
@@ -65,7 +64,7 @@ class UltisnipParser:
         Parses out the snippets into JSON form with the following schema
 
         {
-            "prefix" : {
+            prefix : {
                 "prefix": "",
                 "description": "",
                 "body": "",
@@ -92,13 +91,13 @@ class UltisnipParser:
                     snippets_dictionary[prefix] = snippet
         return snippets_dictionary
 
-    def parse_snippets(self) -> None:
-
+    def parse_snippets(self, verbose=False) -> None:
         for file in self.ultisnip_dir.glob("*.snippets"):
             snippet_data = {
-                "snippets": [],
+                "snippets": {},
             }
             vscode_file_type = self.language_map.get(file.stem)
+
             if file.stem == "all":
                 snippet_data["vscode_file"] = self.vscode_dir / "global.code-snippets"
             elif vscode_file_type is None:
@@ -111,7 +110,9 @@ class UltisnipParser:
             scopes.append(file)
             for scope in scopes:
                 snippets = self._parse_snippet(scope)
-                snippet_data["snippets"].append(snippets)
+                snippet_data["snippets"].update(snippets)
+                if verbose:
+                    print(f'{scope.name:30} {"-->":10} {snippet_data["vscode_file"].name:30}')
 
             self._snippets_data[file.name] = snippet_data
 
