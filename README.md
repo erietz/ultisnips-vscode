@@ -2,17 +2,12 @@
 
 I don't always use VSCode. But when I do, I use Ultisnips.
 
-![](./mim.jpeg)
-
-This script allows you to write all of your snippets in vims 
-Ultisnips format, and convert the whole batch to json format 
-for use in vscode.
+This script allows you to write all of your snippets in vims Ultisnips format,
+and convert the whole batch to json format for use in vscode.
 
 # Installation
 
-- Clone this repository
-- `cd ultisnips-vscode`
-- `pip install .`
+`pip install ultisnips-vscode`
 
 # Usage
 
@@ -37,18 +32,24 @@ for use in vscode.
 }
 ```
 
-- Source your shell, or log out and log back in so the script is in your `$PATH`
-- Run the command `ultisnips_to_vscode` to synchronize your snippets. This will
-output something like:
+- Source your shell, or log out and log back in so the script is in your
+  `$PATH`
+- Run the command `ultisnips2vscode` to synchronize your snippets. This will
+  output something like:
 
 ``` 
-------------------------------------------------------------------------------------------------------------------------
-/Users/ethan/.vim/UltiSnips/zsh.snippets           ----->     /Users/ethan/Library/Application Support/Code/User/snippets/shellscript.json
-/Users/ethan/.vim/UltiSnips/texmath.snippets       ----->     /Users/ethan/Library/Application Support/Code/User/snippets/tex.json
-/Users/ethan/.vim/UltiSnips/tex.snippets           ----->     /Users/ethan/Library/Application Support/Code/User/snippets/tex.json
-/Users/ethan/.vim/UltiSnips/python.snippets        ----->     /Users/ethan/Library/Application Support/Code/User/snippets/python.json
-/Users/ethan/.vim/UltiSnips/texmath.snippets       ----->     /Users/ethan/Library/Application Support/Code/User/snippets/markdown.json
-/Users/ethan/.vim/UltiSnips/markdown.snippets      ----->     /Users/ethan/Library/Application Support/Code/User/snippets/markdown.json
-/Users/ethan/.vim/UltiSnips/all.snippets           ----->     /Users/ethan/Library/Application Support/Code/User/snippets/global.code-snippets
-------------------------------------------------------------------------------------------------------------------------
+sh.snippets                    -->        shellscript.json
+python.snippets                -->        python.json
+all.snippets                   -->        global.code-snippets
+texmath.snippets               -->        doconce.json
+doconce.snippets               -->        doconce.json
+gitcommit.snippets             -->        git-commit.json
+zsh.snippets                   -->        shellscript.json
+json.snippets                  -->        json.json
+html.snippets                  -->        html.json
+c.snippets                     -->        c.json
+texmath.snippets               -->        latex.json
+tex.snippets                   -->        latex.json
+texmath.snippets               -->        markdown.json
+markdown.snippets              -->        markdown.json
 ```
