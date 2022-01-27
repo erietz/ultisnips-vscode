@@ -1,3 +1,5 @@
+![](https://img.shields.io/pypi/v/ultisnips-vscode)
+
 # About
 
 I don't always use VSCode. But when I do, I use Ultisnips.
