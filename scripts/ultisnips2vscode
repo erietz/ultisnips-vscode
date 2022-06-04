@@ -7,8 +7,8 @@ from ultisnips2vscode import UltisnipParser, vim2vscode
 def main():
     config = read_config()
     parser = UltisnipParser(
-        Path(config["ultisnips-snippets"]),
-        Path(config["vscode-snippets"]),
+        Path(config["ultisnips-snippets"]).expanduser(),
+        Path(config["vscode-snippets"]).expanduser(),
         vim2vscode
     )
     parser.parse_snippets(verbose=True)
